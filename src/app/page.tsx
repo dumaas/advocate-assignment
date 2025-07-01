@@ -66,7 +66,6 @@ export default function Home() {
             <th>Specialties</th>
             <th>Years of Experience</th>
             <th>Phone Number</th>
-            <th>Email</th>
           </tr>
         </thead>
         <tbody>
