@@ -61,33 +61,33 @@ export default function Home() {
       </div>
       <br />
       <br />
-      <table>
-        <thead>
+      <table className="w-full border">
+        <thead className="bg-gray-100">
           <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>City</th>
-            <th>Degree</th>
-            <th>Specialties</th>
-            <th>Years of Experience</th>
-            <th>Phone Number</th>
+            <th className="p-2 text-left">First Name</th>
+            <th className="p-2 text-left">Last Name</th>
+            <th className="p-2 text-left">City</th>
+            <th className="p-2 text-left">Degree</th>
+            <th className="p-2 text-left">Specialties</th>
+            <th className="p-2 text-left">Years of Experience</th>
+            <th className="p-2 text-left">Phone Number</th>
           </tr>
         </thead>
         <tbody>
           {filteredAdvocates.map((advocate) => {
             return (
-              <tr key={advocate.id}>
-                <td>{advocate.firstName}</td>
-                <td>{advocate.lastName}</td>
-                <td>{advocate.city}</td>
-                <td>{advocate.degree}</td>
-                <td>
+              <tr key={advocate.id} className="border-b">
+                <td className="p-2">{advocate.firstName}</td>
+                <td className="p-2">{advocate.lastName}</td>
+                <td className="p-2">{advocate.city}</td>
+                <td className="p-2">{advocate.degree}</td>
+                <td className="p-2">
                   {advocate.specialties.map((s) => (
                     <div key={s}>{s}</div>
                   ))}
                 </td>
-                <td>{advocate.yearsOfExperience}</td>
-                <td>{advocate.phoneNumber}</td>
+                <td className="p-2">{advocate.yearsOfExperience}</td>
+                <td className="p-2">{advocate.phoneNumber}</td>
               </tr>
             );
           })}
