@@ -18,17 +18,19 @@ export default function Home() {
   }, []);
 
   const handleSearch = (e) => {
-    const newSearchTerm = e.target.value;
-    setSearchTerm(newSearchTerm);
+    const newSearchTerm = e.target.value.toLowerCase();
+    setSearchTerm(e.target.value);  // Display original case
 
     console.log("filtering advocates on: ", newSearchTerm);
     const filteredAdvocates = advocates.filter((advocate) => {
       return (
-        advocate.firstName.includes(newSearchTerm) ||
-        advocate.lastName.includes(newSearchTerm) ||
-        advocate.city.includes(newSearchTerm) ||
-        advocate.degree.includes(newSearchTerm) ||
-        advocate.specialties.includes(newSearchTerm) ||
+        advocate.firstName.toLowerCase().includes(newSearchTerm) ||
+        advocate.lastName.toLowerCase().includes(newSearchTerm) ||
+        advocate.city.toLowerCase().includes(newSearchTerm) ||
+        advocate.degree.toLowerCase().includes(newSearchTerm) ||
+        advocate.specialties.some((s) =>
+          s.toLowerCase().includes(newSearchTerm)
+        ) ||
         advocate.yearsOfExperience.toString().includes(newSearchTerm)
       );
     });
