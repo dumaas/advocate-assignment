@@ -10,7 +10,7 @@ interface Advocate {
   degree: string;
   specialties: string[];
   yearsOfExperience: number;
-  phoneNumber: string;
+  phoneNumber: number;
   createdAt?: string;
 }
 
