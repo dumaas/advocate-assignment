@@ -1,47 +1,60 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Home() {
-  const [advocates, setAdvocates] = useState([]);
   const [filteredAdvocates, setFilteredAdvocates] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [hasMorePages, setHasMorePages] = useState(true);
 
   useEffect(() => {
-    console.log("fetching advocates...");
-    fetch("/api/advocates").then((response) => {
-      response.json().then((jsonResponse) => {
-        setAdvocates(jsonResponse.data);
-        setFilteredAdvocates(jsonResponse.data);
-      });
-    });
+    fetchAdvocates(1);
   }, []);
+
+  const fetchAdvocates = async (page = 1) => {
+    console.log("fetching advocates on page: ", page);
+    setLoading(true);
+    setSearchTerm("");  // Clear search when changing pages
+    try {
+      const response = await fetch(`/api/advocates?page=${page}`);
+      const data = await response.json();
+      setFilteredAdvocates(data.data);
+      setCurrentPage(page);
+
+      // Fewer than 10 results means no more pages
+      setHasMorePages(data.data.length === 10);
+    } catch (error) {
+      console.error("Error fetching advocates:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   const handleSearch = (e) => {
     const newSearchTerm = e.target.value.toLowerCase();
     setSearchTerm(e.target.value);  // Display original case
-
     console.log("filtering advocates on: ", newSearchTerm);
-    const filteredAdvocates = advocates.filter((advocate) => {
+
+    // Filter only the current page results
+    const filtered = filteredAdvocates.filter((advocate) => {
       return (
         advocate.firstName.toLowerCase().includes(newSearchTerm) ||
         advocate.lastName.toLowerCase().includes(newSearchTerm) ||
         advocate.city.toLowerCase().includes(newSearchTerm) ||
         advocate.degree.toLowerCase().includes(newSearchTerm) ||
-        advocate.specialties.some((s) =>
-          s.toLowerCase().includes(newSearchTerm)
-        ) ||
         advocate.yearsOfExperience.toString().includes(newSearchTerm)
       );
     });
-
-    setFilteredAdvocates(filteredAdvocates);
+    
+    setFilteredAdvocates(filtered);
   };
 
   const handleReset = () => {
     console.log("resetting search");
     setSearchTerm("");
-    setFilteredAdvocates(advocates);
+    fetchAdvocates(1);  // Reset to first page
   };
 
   return (
@@ -68,6 +81,7 @@ export default function Home() {
         {searchTerm && (
           <p className="mt-2 text-sm text-gray-600">
             Searching for: <span className="font-bold">{searchTerm}</span>
+            <span className="text-xs text-gray-500"> (current page only)</span>
           </p>
         )}
       </div>
@@ -105,6 +119,23 @@ export default function Home() {
           })}
         </tbody>
       </table>
+      <div className="mt-4 flex gap-2 justify-center">
+        <button
+          className="px-3 py-2 bg-gray-300 rounded disabled:opacity-50"
+          onClick={() => fetchAdvocates(currentPage - 1)}
+          disabled={loading || currentPage === 1}
+        >
+          Previous
+        </button>
+        <span className="text-gray-600">Page {currentPage}</span>
+        <button
+          className="px-3 py-2 bg-gray-300 rounded disabled:opacity-50"
+          onClick={() => fetchAdvocates(currentPage + 1)}
+          disabled={loading || !hasMorePages}
+        >
+          Next
+        </button>
+      </div>
     </main>
   );
 }
