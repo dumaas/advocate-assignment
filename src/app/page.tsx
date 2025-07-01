@@ -61,47 +61,57 @@ export default function Home() {
       <h1>Solace Advocates</h1>
       <br />
       <br />
-      <div>
-        <p>Search</p>
-        <p>
-          Searching for: <span>{searchTerm}</span>
-        </p>
-        <input
-          style={{ border: "1px solid black" }}
-          onChange={handleSearch}
-          value={searchTerm}
-        />
-        <button onClick={handleReset}>Reset Search</button>
+      <div className="mb-4 p-3 bg-gray-100 border rounded">
+        <h3 className="mb-2 font-bold">Find Advocates</h3>
+        <div className="flex gap-2">
+          <input
+            className="flex-1 p-2 border rounded"
+            placeholder="Search by name, city, degree, etc."
+            onChange={handleSearch}
+            value={searchTerm}
+          />
+          <button
+            className="px-3 py-2 bg-gray-300 rounded"
+            onClick={handleReset}
+          >
+            Reset
+          </button>
+        </div>
+        {searchTerm && (
+          <p className="mt-2 text-sm text-gray-600">
+            Searching for: <span className="font-bold">{searchTerm}</span>
+          </p>
+        )}
       </div>
       <br />
       <br />
-      <table>
-        <thead>
+      <table className="w-full border">
+        <thead className="bg-gray-100">
           <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>City</th>
-            <th>Degree</th>
-            <th>Specialties</th>
-            <th>Years of Experience</th>
-            <th>Phone Number</th>
+            <th className="p-2 text-left">First Name</th>
+            <th className="p-2 text-left">Last Name</th>
+            <th className="p-2 text-left">City</th>
+            <th className="p-2 text-left">Degree</th>
+            <th className="p-2 text-left">Specialties</th>
+            <th className="p-2 text-left">Years of Experience</th>
+            <th className="p-2 text-left">Phone Number</th>
           </tr>
         </thead>
         <tbody>
           {filteredAdvocates.map((advocate) => {
             return (
-              <tr key={advocate.id}>
-                <td>{advocate.firstName}</td>
-                <td>{advocate.lastName}</td>
-                <td>{advocate.city}</td>
-                <td>{advocate.degree}</td>
-                <td>
+              <tr key={advocate.id} className="border-b">
+                <td className="p-2">{advocate.firstName}</td>
+                <td className="p-2">{advocate.lastName}</td>
+                <td className="p-2">{advocate.city}</td>
+                <td className="p-2">{advocate.degree}</td>
+                <td className="p-2">
                   {advocate.specialties.map((s) => (
                     <div key={s}>{s}</div>
                   ))}
                 </td>
-                <td>{advocate.yearsOfExperience}</td>
-                <td>{advocate.phoneNumber}</td>
+                <td className="p-2">{advocate.yearsOfExperience}</td>
+                <td className="p-2">{advocate.phoneNumber}</td>
               </tr>
             );
           })}
