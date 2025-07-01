@@ -21,7 +21,7 @@ export default function Home() {
 
     document.getElementById("search-term").innerHTML = searchTerm;
 
-    console.log("filtering advocates...");
+    console.log("filtering advocates on: ", searchTerm);
     const filteredAdvocates = advocates.filter((advocate) => {
       return (
         advocate.firstName.includes(searchTerm) ||
@@ -29,7 +29,7 @@ export default function Home() {
         advocate.city.includes(searchTerm) ||
         advocate.degree.includes(searchTerm) ||
         advocate.specialties.includes(searchTerm) ||
-        advocate.yearsOfExperience.includes(searchTerm)
+        advocate.yearsOfExperience.toString().includes(searchTerm)
       );
     });
 
