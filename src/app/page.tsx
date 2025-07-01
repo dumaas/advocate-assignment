@@ -11,6 +11,7 @@ interface Advocate {
   specialties: string[];
   yearsOfExperience: number;
   phoneNumber: string;
+  createdAt?: string;
 }
 
 export default function Home() {
