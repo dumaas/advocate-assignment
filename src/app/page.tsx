@@ -2,9 +2,21 @@
 
 import { useEffect, useRef, useState } from "react";
 
+interface Advocate {
+  id: number;
+  firstName: string;
+  lastName: string;
+  city: string;
+  degree: string;
+  specialties: string[];
+  yearsOfExperience: number;
+  phoneNumber: string;
+  createdAt?: string;
+}
+
 export default function Home() {
-  const [filteredAdvocates, setFilteredAdvocates] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredAdvocates, setFilteredAdvocates] = useState<Advocate[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasMorePages, setHasMorePages] = useState(true);
@@ -32,7 +44,7 @@ export default function Home() {
     }
   }
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newSearchTerm = e.target.value.toLowerCase();
     setSearchTerm(e.target.value);  // Display original case
     console.log("filtering advocates on: ", newSearchTerm);
