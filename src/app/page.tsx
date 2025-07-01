@@ -47,17 +47,27 @@ export default function Home() {
       <h1>Solace Advocates</h1>
       <br />
       <br />
-      <div>
-        <p>Search</p>
-        <p>
-          Searching for: <span>{searchTerm}</span>
-        </p>
-        <input
-          style={{ border: "1px solid black" }}
-          onChange={handleSearch}
-          value={searchTerm}
-        />
-        <button onClick={handleReset}>Reset Search</button>
+      <div className="mb-4 p-3 bg-gray-100 border rounded">
+        <h3 className="mb-2 font-bold">Find Advocates</h3>
+        <div className="flex gap-2">
+          <input
+            className="flex-1 p-2 border rounded"
+            placeholder="Search by name, city, degree, etc."
+            onChange={handleSearch}
+            value={searchTerm}
+          />
+          <button
+            className="px-3 py-2 bg-gray-300 rounded"
+            onClick={handleReset}
+          >
+            Reset
+          </button>
+        </div>
+        {searchTerm && (
+          <p className="mt-2 text-sm text-gray-600">
+            Searching for: <span className="font-bold">{searchTerm}</span>
+          </p>
+        )}
       </div>
       <br />
       <br />
