@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Advocate {
   id: number;
@@ -17,9 +17,9 @@ interface Advocate {
 export default function Home() {
   const [filteredAdvocates, setFilteredAdvocates] = useState<Advocate[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [hasMorePages, setHasMorePages] = useState(true);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [hasMorePages, setHasMorePages] = useState<boolean>(true);
 
   useEffect(() => {
     fetchAdvocates(1);
